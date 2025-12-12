@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj" />
+    <ProjectReference Include="..\HowlDev.Web.Authentication.Middleware\HowlDev.Web.Authentication.Middleware.csproj" />
+  </ItemGroup>
+
+</Project>

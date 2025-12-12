@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Authentication.AccountAuth", "HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj", "{D9236993-59D0-D883-FB80-E4683BB12DF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Authentication.Middleware", "HowlDev.Web.Authentication.Middleware\HowlDev.Web.Authentication.Middleware.csproj", "{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Helpers.DbConnector", "HowlDev.Web.Helpers.DbConnector\HowlDev.Web.Helpers.DbConnector.csproj", "{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Authentication.AccountAuth.API", "HowlDev.Web.Authentication.AccountAuth.API\HowlDev.Web.Authentication.AccountAuth.API.csproj", "{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9236993-59D0-D883-FB80-E4683BB12DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9236993-59D0-D883-FB80-E4683BB12DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9236993-59D0-D883-FB80-E4683BB12DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9236993-59D0-D883-FB80-E4683BB12DF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1355DB6-8506-4EE7-82AA-0EEE9100C835}
+	EndGlobalSection
+EndGlobal

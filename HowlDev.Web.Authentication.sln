@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Authentication.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Authentication.Middleware", "HowlDev.Web.Authentication.Middleware\HowlDev.Web.Authentication.Middleware.csproj", "{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Helpers.DbConnector", "HowlDev.Web.Helpers.DbConnector\HowlDev.Web.Helpers.DbConnector.csproj", "{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowlDev.Web.Authentication.AccountAuth.API", "HowlDev.Web.Authentication.AccountAuth.API\HowlDev.Web.Authentication.AccountAuth.API.csproj", "{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4920AA9B-E4DF-4BAD-A2B0-1FA1B1D6C5FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8383A9E-DD6B-4649-8453-7BAF7154AFA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43F9FCEB-0AA1-29D7-1D01-B84978BA7958}.Release|Any CPU.ActiveCfg = Release|Any CPU

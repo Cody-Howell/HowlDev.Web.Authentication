@@ -3,6 +3,11 @@ namespace HowlDev.Web.Authentication.AccountAuth.Interfaces;
 public interface IAuthService {
     Task<Account> GetUserAsync(string account);
     Task<IEnumerable<Account>> QueryUsersAsync(string query, int limit);
+    Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit);
+    Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit);
+    Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit);
+    Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit);
+    Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit);
     Task<IEnumerable<Account>> GetAllUsersAsync();
     Task AddUserAsync(string accountName, string defaultPassword, int defaultRole);
     Task DeleteUserAsync(string accountId);

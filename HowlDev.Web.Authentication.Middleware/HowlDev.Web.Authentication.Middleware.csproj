@@ -1,12 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+		<TargetFramework>net8.0</TargetFramework>
+		<Version>1.0.0</Version>
+		<Authors>Howl Dev</Authors>
+		<Description>A naive account/key middleware for an API.</Description>
+		<Copyright>Copyright (c) Howl Dev 2025</Copyright>
+		<PackageTags>auth,middleware</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/Cody-Howell/HowlDev.Web.Authentication</RepositoryUrl>
+		<PackageProjectUrl>https://wiki.codyhowell.dev/web.auth.accountauth</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>_HowlDevLogo.png</PackageIcon>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="README.md" />
+		<None Include="../_HowlDevLogo.png" Pack="true" PackagePath="" />
     <ProjectReference Include="..\HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-[Parsers](https://www.nuget.org/packages/HowlDev.Web.Authentication.AccountAuth): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.Web.Authentication.AccountAuth)
+[AccountAuth](https://www.nuget.org/packages/HowlDev.Web.Authentication.AccountAuth): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.Web.Authentication.AccountAuth)
+[Middleware](https://www.nuget.org/packages/HowlDev.Web.Authentication.Middleware): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.Web.Authentication.Middleware)
 
 # HowlDev.Web.Authentication
 

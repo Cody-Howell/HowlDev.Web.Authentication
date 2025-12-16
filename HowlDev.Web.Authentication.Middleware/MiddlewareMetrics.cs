@@ -3,8 +3,7 @@ using System.Diagnostics.Metrics;
 /// <summary>
 /// Provides a few metrics for middleware-specific actions. 
 /// </summary>
-public static class AuthMetrics
-{
+public static class AuthMetrics {
     private static readonly Meter _meter = new("HowlDev.Web.Authentication.Middleware", "1.0.0");
 
     /// <summary>

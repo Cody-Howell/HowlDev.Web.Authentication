@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using HowlDev.Web.Authentication.AccountAuth;
+﻿using HowlDev.Web.Authentication.AccountAuth;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace HowlDev.Web.Authentication.Middleware;
 

@@ -210,7 +210,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    
+
     /// <inheritdoc />
     public Task<string> GetAccountNameAsync(Guid account) =>
         conn.WithConnectionAsync(async conn => {

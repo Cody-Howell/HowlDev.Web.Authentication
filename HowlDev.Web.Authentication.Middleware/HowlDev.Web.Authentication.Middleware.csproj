@@ -20,9 +20,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../README.md" Pack="true" PackagePath="README.md" />
+    	<None Include="../README.md" Pack="true" PackagePath="README.md" />
 		<None Include="../_HowlDevLogo.png" Pack="true" PackagePath="" />
-    <ProjectReference Include="..\HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj" />
+    	<ProjectReference Include="..\HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj" />
   </ItemGroup>
 
 </Project>

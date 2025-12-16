@@ -1,0 +1,21 @@
+using System.Diagnostics.Metrics;
+
+/// <summary>
+/// Provides a few metrics for middleware-specific actions. 
+/// </summary>
+public static class AuthMetrics
+{
+    private static readonly Meter _meter = new("HowlDev.Web.Authentication.Middleware", "1.0.0");
+
+    /// <summary>
+    /// Count of how many keys had their timer reset.
+    /// </summary>
+    public static readonly Counter<int> ResetKeys =
+        _meter.CreateCounter<int>("auth_reset_keys");
+
+    /// <summary>
+    /// Count of how many keys have expired and been removed. 
+    /// </summary>
+    public static readonly Counter<int> ExpiredKeys =
+        _meter.CreateCounter<int>("auth_expired_keys");
+}

@@ -89,6 +89,7 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
                 if (config.ReValidationDate is not null &&
                     timeBetween > config.ReValidationDate) {
                     await service.ReValidateAsync(account, key);
+                    AuthMetrics.ResetKeys.Add(1);
                     logger.LogInformation("Key was revalidated.");
                 }
 
@@ -99,6 +100,7 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Time has run out. Please sign in again.");
                 logger.LogInformation("Key was expired and removed.");
+                AuthMetrics.ExpiredKeys.Add(1);
             }
         }
         logger.LogTrace("Exiting middleware method.");

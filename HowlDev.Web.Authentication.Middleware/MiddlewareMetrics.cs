@@ -1,7 +1,10 @@
 using System.Diagnostics.Metrics;
 
+namespace HowlDev.Web.Authentication.Middleware;
+
 /// <summary>
-/// Provides a few metrics for middleware-specific actions. 
+/// Provides a few metrics for middleware-specific actions. The 
+/// string to use is <c>HowlDev.Web.Authentication.Middleware</c>. 
 /// </summary>
 public static class AuthMetrics {
     private static readonly Meter _meter = new("HowlDev.Web.Authentication.Middleware", "1.0.0");

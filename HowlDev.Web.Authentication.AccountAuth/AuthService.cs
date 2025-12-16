@@ -37,7 +37,8 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             var AddUser = "insert into \"HowlDev.User\" values (@guid, @accountName, @passHash, @defaultRole)";
             try {
                 await conn.ExecuteAsync(AddUser, new { guid, accountName, passHash, defaultRole });
-            } catch {
+            } catch (Exception e) {
+                logger.LogError("AddUserAsync threw an error: {e}", e);
                 throw new ArgumentException("Account name already exists.");
             }
         }
@@ -61,7 +62,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
 
     /// <summary>
     /// <c>For Debug Only</c>, I wouldn't reccommend assigning this an endpoint. Returns all users sorted by 
-    /// ID. 
+    /// ID. Swallows errors and returns an empty list. 
     /// </summary>
     public Task<IEnumerable<Account>> GetAllUsersAsync() =>
         conn.WithConnectionAsync(async conn => {
@@ -90,14 +91,13 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
 
     #region Validation
     /// <summary>
-    /// You can decide whether or not the returned date is valid (if you want expiration dates). 
+    /// Returns a date for when the API key was last updated in the <c>validatedOn</c> field.
     /// Throws an exception if no API key exists in the table. 
     /// </summary>
     /// <param name="accountName">Account used</param>
     /// <param name="key">API Key</param>
     /// <returns>Null or DateTime</returns>
-    /// <exception cref="Exception"></exception>
-    public Task<DateTime> IsValidApiKeyAsync(string accountName, string key) =>
+    public Task<DateTime> GetValidatedOnForKeyAsync(string accountName, string key) =>
         conn.WithConnectionAsync(async conn => {
             var validKey = "select k.validatedon from \"HowlDev.Key\" k where accountId = @accountName and apiKey = @key";
             return await conn.QuerySingleAsync<DateTime>(validKey, new { accountName, key });
@@ -188,7 +188,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
     );
 
     /// <summary>
-    /// Sign out on an individual device by passing the key you want signed out. 
+    /// Sign out on an individual key. 
     /// </summary>
     public Task KeySignOutAsync(string accountId, string key) =>
         conn.WithConnectionAsync(async conn => {
@@ -259,5 +259,55 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             string connCount = "select count(*) from \"HowlDev.Key\" where accountId = @account";
             return await conn.QuerySingleAsync<int>(connCount, new { account });
         });
+
+    /// <summary>
+    /// Returns the first <c>limit</c> users, given their AccountName, from the query. 
+    /// The query checks Contains, so in SQL '%{query}%'.
+    /// </summary>
+    public Task<IEnumerable<Account>> QueryUsersAsync(string query, int limit = 10) {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Gets the first <c>limit</c> users with a role greater than the given provided role. 
+    /// </summary>
+    public Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit) {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Gets the first <c>limit</c> users with a role greater than or equal to the given provided role.
+    /// </summary>
+    public Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit) {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Gets the first <c>limit</c> users with a role equal to the given provided role.
+    /// </summary>
+    public Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit) {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Gets the first <c>limit</c> users with a role less than or equal to the given provided role.
+    /// </summary>
+    public Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit) {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Gets the first <c>limit</c> users with a role less than the given provided role.
+    /// </summary>
+    public Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit) {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Gets the account name for the given user ID (Guid).
+    /// </summary>
+    public Task<string> GetAccountNameAsync(Guid account) {
+        throw new NotImplementedException();
+    }
     #endregion
 }

@@ -1,6 +1,8 @@
-# AccountAuthenticator
+[Parsers](https://www.nuget.org/packages/HowlDev.Web.Authentication.AccountAuth): ![NuGet Version](https://img.shields.io/nuget/v/HowlDev.Web.Authentication.AccountAuth)
 
-Read the docs [at this link](https://wiki.codyhowell.dev/accountauth).
+# HowlDev.Web.Authentication
+
+Read the docs [at this link](https://wiki.codyhowell.dev/web.auth.accountauth).
 
 This authenticator provides an AuthService, an IdentityMiddleware, and some helpful parameters and extensions 
 for minimalAPIs. This is a similarly naive authenticator that handles an account/password combo, but works in essentially the 
@@ -76,6 +78,10 @@ For items in long-term storage:
     1. Account Name Switching. Currently, there are no functions to allow you to change the account name. One could be written that checks if the account name is already in use, and if not, allows you to change a user given the GUID. This should also invalidate all cache related to that account name.
 
 ## Changelog
+
+3.0.3 - Beta (12/15/25)
+
+- Removed the Logging option from the configuration (this should be left to you anyways). 
 
 3.0.2 - Beta (11/22/25)
 

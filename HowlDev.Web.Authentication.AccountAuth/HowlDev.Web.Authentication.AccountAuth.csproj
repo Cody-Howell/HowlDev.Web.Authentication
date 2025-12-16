@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Version>3.0.2-beta</Version>
 		<Authors>Howl Dev</Authors>
 		<Description>A naive Account/Password auth package with a service and middleware for an API.</Description>
+		<Copyright>Copyright (c) Howl Dev 2025</Copyright>
 		<PackageTags>auth</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<RepositoryUrl>https://github.com/Cody-Howell/AccountAuthenticator</RepositoryUrl>
+		<RepositoryUrl>https://github.com/Cody-Howell/HowlDev.Web.Authentication</RepositoryUrl>
+		<PackageProjectUrl>https://wiki.codyhowell.dev/web.auth.accountauth</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>_HowlDevLogo.png</PackageIcon>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -19,9 +21,9 @@
 
 	<ItemGroup>
 		<None Include="../README.md" Pack="true" PackagePath="README.md" />
-		<None Include="_HowlDevLogo.png" Pack="true" PackagePath="" />
+		<None Include="../_HowlDevLogo.png" Pack="true" PackagePath="" />
 		<PackageReference Include="Dapper" Version="2.1.66" />
-		<PackageReference Include="HowlDev.Web.Helpers.DbConnector" Version="1.0.0" />
+		<PackageReference Include="HowlDev.Web.Helpers.DbConnector" Version="1.0.1" />
 		<PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
 		<PackageReference Include="Npgsql" Version="9.0.3" />
 	</ItemGroup>

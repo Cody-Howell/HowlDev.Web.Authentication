@@ -16,7 +16,7 @@ public interface IAuthService {
     Task<Guid> GetGuidAsync(string account);
     Task<string> GetAccountNameAsync(Guid account);
     Task<int> GetRoleAsync(string account);
-    Task<DateTime> IsValidApiKeyAsync(string accountName, string key);
+    Task<DateTime> GetValidatedOnForKeyAsync(string accountName, string key);
     Task<bool> IsValidUserPassAsync(string accountName, string password);
     Task GlobalSignOutAsync(string accountId);
     Task KeySignOutAsync(string accountId, string key);

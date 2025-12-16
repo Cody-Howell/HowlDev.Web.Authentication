@@ -26,11 +26,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
     private DbConnector conn = new DbConnector(config);
 
     #region User Creation/Validation
-    /// <summary>
-    /// Adds a new user if one doesn't already exist and throws an error if they do. Should 
-    /// only be used in the sign-up process.
-    /// </summary>
-    /// <exception cref="ArgumentException"></exception>
+    /// <inheritdoc />
     public Task AddUserAsync(string accountName, string defaultPassword = "password", int defaultRole = 0) =>
         conn.WithConnectionAsync(async conn => {
             string passHash = Argon2Helper.HashPassword(defaultPassword);
@@ -45,10 +41,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Adds a new line to the API key table.
-    /// </summary>
-    /// <returns>API key</returns>
+    /// <inheritdoc />
     public Task<string> NewSignInAsync(string accountName) =>
         conn.WithConnectionAsync(async conn => {
             string newApiKey = StringHelper.GenerateRandomString(20);
@@ -61,10 +54,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// <c>For Debug Only</c>, I wouldn't reccommend assigning this an endpoint. Returns all users sorted by 
-    /// ID. Swallows errors and returns an empty list. 
-    /// </summary>
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> GetAllUsersAsync() =>
         conn.WithConnectionAsync(async conn => {
             var GetUsers = "select p.id, p.accountName, p.role from \"HowlDev.User\" p order by 1";
@@ -76,9 +66,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Returns the user object from the given account. Throws an exception if the user does not exist.
-    /// </summary>
+    /// <inheritdoc />
     public Task<Account> GetUserAsync(string account) =>
         conn.WithConnectionAsync(async conn => {
             return new Account {
@@ -91,13 +79,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
     #endregion
 
     #region Validation
-    /// <summary>
-    /// Returns a date for when the API key was last updated in the <c>validatedOn</c> field.
-    /// Throws an exception if no API key exists in the table. 
-    /// </summary>
-    /// <param name="accountName">Account used</param>
-    /// <param name="key">API Key</param>
-    /// <returns>Null or DateTime</returns>
+    /// <inheritdoc />
     public Task<DateTime> GetValidatedOnForKeyAsync(string accountName, string key) =>
         conn.WithConnectionAsync(async conn => {
             var validKey = "select k.validatedon from \"HowlDev.Key\" k where accountId = @accountName and apiKey = @key";
@@ -105,11 +87,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Returns True if the username and password match what's stored in the database. This 
-    /// handles errors thrown by invalid users and simply returns False.
-    /// </summary>
-    /// <returns>If the hashed password equals the stored hash</returns>
+    /// <inheritdoc />
     public Task<bool> IsValidUserPassAsync(string accountName, string password) =>
         conn.WithConnectionAsync(async conn => {
             logger.LogTrace("Entered IsValidUserPassAsync.");
@@ -124,11 +102,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Updates the api key with the current DateTime value. This allows recently 
-    /// signed-in users to continue being signed in on their key. It's primarily 
-    /// used by my IdentityMiddleware and not recommended you use it on its own.
-    /// </summary>
+    /// <inheritdoc />
     public Task ReValidateAsync(string accountId, string key) =>
         conn.WithConnectionAsync(async conn => {
             string time = DateTime.Now.ToUniversalTime().ToString("u");
@@ -139,10 +113,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
     #endregion
 
     #region Updates
-    /// <summary>
-    /// Updates the user's password in the table. Does not affect any of the API keys currently
-    /// entered. 
-    /// </summary>
+    /// <inheritdoc />
     public Task UpdatePasswordAsync(string accountName, string newPassword) =>
         conn.WithConnectionAsync(async conn => {
             string newHash = Argon2Helper.HashPassword(newPassword);
@@ -151,10 +122,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Updates the user's role in the table. Does not affect any current keys.
-    /// Does update the lookup dictionary with the new role. 
-    /// </summary>
+    /// <inheritdoc />
     public Task UpdateRoleAsync(string accountName, int newRole) =>
         conn.WithConnectionAsync(async conn => {
             var role = "update \"HowlDev.User\" p set role = @newRole where accountName = @accountName";
@@ -165,9 +133,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
     #endregion
 
     #region Deletion/Sign Out
-    /// <summary>
-    /// Deletes all sign-in records by the user and their place in the User table.
-    /// </summary>
+    /// <inheritdoc />
     public Task DeleteUserAsync(string accountId) =>
         conn.WithConnectionAsync(async conn => {
             await GlobalSignOutAsync(accountId);
@@ -177,10 +143,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Signs a user out globally (all keys are deleted), such as in the instance 
-    /// of someone else gaining access to their account.
-    /// </summary>
+    /// <inheritdoc />
     public Task GlobalSignOutAsync(string accountId) =>
         conn.WithConnectionAsync(async conn => {
             var removeKeys = "delete from \"HowlDev.Key\" where accountId = @accountId";
@@ -188,9 +151,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Sign out on an individual key. 
-    /// </summary>
+    /// <inheritdoc />
     public Task KeySignOutAsync(string accountId, string key) =>
         conn.WithConnectionAsync(async conn => {
             var removeKey = "delete from \"HowlDev.Key\" where accountId = @accountId and apiKey = @key";
@@ -198,9 +159,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Given the TimeSpan, remove keys from any user that are older than that length.
-    /// </summary>
+    /// <inheritdoc />
     public Task ExpiredKeySignOutAsync(TimeSpan length) =>
         conn.WithConnectionAsync(async conn => {
             DateTime expirationTime = DateTime.Now - length;
@@ -251,9 +210,17 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         }
     );
 
-    /// <summary>
-    /// Retrieves the current number of sessions for a given user. 
-    /// </summary>
+    
+    /// <inheritdoc />
+    public Task<string> GetAccountNameAsync(Guid account) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """select accountName from "HowlDev.User" where id = @account""";
+            return await conn.QuerySingleAsync<string>(sql, new { account });
+        });
+
+    #endregion
+
+    /// <inheritdoc />
     public Task<int> GetCurrentSessionCountAsync(string account) =>
         conn.WithConnectionAsync(async conn => {
             logger.LogTrace("Entered GetCurrentSessionCountAsync");
@@ -261,10 +228,8 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             return await conn.QuerySingleAsync<int>(connCount, new { account });
         });
 
-    /// <summary>
-    /// Returns the first <c>limit</c> users, given their AccountName, from the query. 
-    /// The query checks Contains, so in SQL '%{query}%'.
-    /// </summary>
+    #region Queries
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> QueryUsersAsync(string query, int limit = 10) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
@@ -279,9 +244,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             }
         });
 
-    /// <summary>
-    /// Gets the first <c>limit</c> users with a role greater than the given provided role. 
-    /// </summary>
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
@@ -296,9 +259,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             }
         });
 
-    /// <summary>
-    /// Gets the first <c>limit</c> users with a role greater than or equal to the given provided role.
-    /// </summary>
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
@@ -313,9 +274,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             }
         });
 
-    /// <summary>
-    /// Gets the first <c>limit</c> users with a role equal to the given provided role.
-    /// </summary>
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
@@ -330,9 +289,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             }
         });
 
-    /// <summary>
-    /// Gets the first <c>limit</c> users with a role less than or equal to the given provided role.
-    /// </summary>
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
@@ -347,9 +304,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             }
         });
 
-    /// <summary>
-    /// Gets the first <c>limit</c> users with a role less than the given provided role.
-    /// </summary>
+    /// <inheritdoc />
     public Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
@@ -362,15 +317,6 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
             } catch {
                 return [];
             }
-        });
-
-    /// <summary>
-    /// Gets the account name for the given user ID (Guid).
-    /// </summary>
-    public Task<string> GetAccountNameAsync(Guid account) =>
-        conn.WithConnectionAsync(async conn => {
-            string sql = """select accountName from "HowlDev.User" where id = @account""";
-            return await conn.QuerySingleAsync<string>(sql, new { account });
         });
     #endregion
 }

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using HowlDev.Web.Authentication.AccountAuth.Interfaces;
 using HowlDev.Web.Helpers.DbConnector;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
@@ -264,50 +265,112 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
     /// Returns the first <c>limit</c> users, given their AccountName, from the query. 
     /// The query checks Contains, so in SQL '%{query}%'.
     /// </summary>
-    public Task<IEnumerable<Account>> QueryUsersAsync(string query, int limit = 10) {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Account>> QueryUsersAsync(string query, int limit = 10) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """
+            select p.id, p.accountName, p.role from "HowlDev.User" p
+                where p.accountName ilike @query
+                limit @limit
+            """;
+            try {
+                return await conn.QueryAsync<Account>(sql, new { query, limit });
+            } catch {
+                return [];
+            }
+        });
 
     /// <summary>
     /// Gets the first <c>limit</c> users with a role greater than the given provided role. 
     /// </summary>
-    public Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit) {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """
+            select p.id, p.accountName, p.role from "HowlDev.User" p
+                where p.role > @role
+                limit @limit
+            """;
+            try {
+                return await conn.QueryAsync<Account>(sql, new { role, limit });
+            } catch {
+                return [];
+            }
+        });
 
     /// <summary>
     /// Gets the first <c>limit</c> users with a role greater than or equal to the given provided role.
     /// </summary>
-    public Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit) {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """
+            select p.id, p.accountName, p.role from "HowlDev.User" p
+                where p.role >= @role
+                limit @limit
+            """;
+            try {
+                return await conn.QueryAsync<Account>(sql, new { role, limit });
+            } catch {
+                return [];
+            }
+        });
 
     /// <summary>
     /// Gets the first <c>limit</c> users with a role equal to the given provided role.
     /// </summary>
-    public Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit) {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """
+            select p.id, p.accountName, p.role from "HowlDev.User" p
+                where p.role = @role
+                limit @limit
+            """;
+            try {
+                return await conn.QueryAsync<Account>(sql, new { role, limit });
+            } catch {
+                return [];
+            }
+        });
 
     /// <summary>
     /// Gets the first <c>limit</c> users with a role less than or equal to the given provided role.
     /// </summary>
-    public Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit) {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """
+            select p.id, p.accountName, p.role from "HowlDev.User" p
+                where p.role <= @role
+                limit @limit
+            """;
+            try {
+                return await conn.QueryAsync<Account>(sql, new { role, limit });
+            } catch {
+                return [];
+            }
+        });
 
     /// <summary>
     /// Gets the first <c>limit</c> users with a role less than the given provided role.
     /// </summary>
-    public Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit) {
-        throw new NotImplementedException();
-    }
+    public Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """
+            select p.id, p.accountName, p.role from "HowlDev.User" p
+                where p.role < @role
+                limit @limit
+            """;
+            try {
+                return await conn.QueryAsync<Account>(sql, new { role, limit });
+            } catch {
+                return [];
+            }
+        });
 
     /// <summary>
     /// Gets the account name for the given user ID (Guid).
     /// </summary>
-    public Task<string> GetAccountNameAsync(Guid account) {
-        throw new NotImplementedException();
-    }
+    public Task<string> GetAccountNameAsync(Guid account) =>
+        conn.WithConnectionAsync(async conn => {
+            string sql = """select accountName from "HowlDev.User" where id = @account""";
+            return await conn.QuerySingleAsync<string>(sql, new { account });
+        });
     #endregion
 }

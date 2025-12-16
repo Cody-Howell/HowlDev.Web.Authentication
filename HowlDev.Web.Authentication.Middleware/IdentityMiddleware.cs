@@ -72,7 +72,7 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
 
             DateTime? output;
             try {
-                output = await service.IsValidApiKeyAsync(account, key);
+                output = await service.GetValidatedOnForKeyAsync(account, key);
                 if (config.EnableLogging)
                     logger.LogTrace("Found a date value ({datetime}) for input API key ({key})", output, key);
             } catch {

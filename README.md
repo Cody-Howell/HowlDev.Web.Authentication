@@ -5,8 +5,9 @@
 Read the docs [at this link](https://wiki.codyhowell.dev/web.auth.accountauth).
 
 This authenticator provides an AuthService, an IdentityMiddleware, and some helpful parameters and extensions 
-for minimalAPIs. This is a similarly naive authenticator that handles an account/password combo, but works in essentially the 
-same way as the EmailAuthenticator. 
+for minimalAPIs. This is a naive authenticator that handles an account/password combo.
+
+This is the README for both the AccountAuth and Middleware package. 
 
 Recommended API layout in `Program.cs`: 
 
@@ -24,6 +25,17 @@ Important headers:
 ```
 Account-Auth-Account: {{Username}}
 Account-Auth-ApiKey: {{Key}}
+```
+
+To enable logs, your appsettings.json should look like this: 
+```csharp
+"Logging": {
+  "LogLevel": {
+    "Default": "Information",
+    "HowlDev.Web.Authentication": "Trace" // Or Debug, Information, Warn, Error, etc.
+    // .. any others here
+  }
+},
 ```
 
 You can check the XML comments for my extension method and the AccountInfo parameter, and you can use

@@ -21,8 +21,7 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
     /// 
     /// </summary>
     public async Task InvokeAsync(HttpContext context) {
-        if (config.EnableLogging)
-            logger.LogTrace("Entered middleware method.");
+        logger.LogTrace("Entered middleware method.");
 
         bool startsWith = false;
         if (config.Whitelist is not null) {
@@ -31,12 +30,10 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
 
 
         if (startsWith) {
-            if (config.EnableLogging)
-                logger.LogDebug("Whitelist skipped authentication.");
+            logger.LogDebug("Whitelist skipped authentication.");
             await next(context);
         } else if (config.Paths.Contains(context.Request.Path)) {
-            if (config.EnableLogging)
-                logger.LogDebug("Paths excluded current request.");
+            logger.LogDebug("Paths excluded current request.");
             await next(context);
         } else {
             // Validate user here
@@ -49,23 +46,21 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
                 } else {
                     await context.Response.WriteAsync("Unauthorized: Missing header(s).\nRequires an \"Account-Auth-Account\" and \"Account-Auth-ApiKey\" header.");
                 }
-                if (config.EnableLogging)
-                    logger.LogInformation("Two required headers were not found. Found headers: {headers}", context.Request.Headers);
+                logger.LogInformation("Two required headers were not found. Found headers: {headers}", context.Request.Headers);
                 return;
             }
 
             try {
+                logger.LogTrace("Filling context.Items with account information.");
                 Account acc = await service.GetUserAsync(account);
                 context.Items["Guid"] = acc.Id;
                 context.Items["Role"] = acc.Role;
                 context.Items["Account"] = account;
-                if (config.EnableLogging)
-                    logger.LogTrace("Filled context.Items with account information.");
+                logger.LogTrace("Filled context.Items with account information.");
             } catch {
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Account does not exist.");
-                if (config.EnableLogging)
-                    logger.LogInformation("Account information could not be found. Searched for account: {account}", account);
+                logger.LogInformation("Account information could not be found. Searched for account: {account}", account);
                 return;
             }
 
@@ -73,33 +68,28 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
             DateTime? output;
             try {
                 output = await service.GetValidatedOnForKeyAsync(account, key);
-                if (config.EnableLogging)
-                    logger.LogTrace("Found a date value ({datetime}) for input API key ({key})", output, key);
+                logger.LogTrace("Found a date value ({datetime})", output);
             } catch {
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("API key does not exist.");
-                if (config.EnableLogging)
-                    logger.LogInformation("Could not find API key ({key}) in the table.", key);
+                logger.LogInformation("Could not find API key ({key}) in the table.", key);
                 return;
             }
 
             if (config.ExpirationDate is null) {
+                logger.LogDebug("Expiration date is null. Not performing any validation checks on the date.");
                 await next(context);
-                if (config.EnableLogging)
-                    logger.LogDebug("Expiration date is null. Not performing any validation checks on the date.");
                 return;
             }
 
 
             TimeSpan? timeBetween = DateTime.Now.ToUniversalTime() - output;
             if (timeBetween < config.ExpirationDate) {
-                if (config.EnableLogging)
-                    logger.LogTrace("Found date was not past the calculated expiration date. There is still ({timespan}) time left.", timeBetween);
+                logger.LogTrace("Found date was not past the calculated expiration date. There is still ({timespan}) time left.", timeBetween);
                 if (config.ReValidationDate is not null &&
                     timeBetween > config.ReValidationDate) {
                     await service.ReValidateAsync(account, key);
-                    if (config.EnableLogging)
-                        logger.LogInformation("Key ({key}) was revalidated.", key);
+                    logger.LogInformation("Key was revalidated.");
                 }
 
                 await next(context);
@@ -108,9 +98,9 @@ public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMid
                 await service.ExpiredKeySignOutAsync((TimeSpan)config.ExpirationDate);
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Time has run out. Please sign in again.");
-                if (config.EnableLogging)
-                    logger.LogInformation("Key ({key}) was expired and removed.", key);
+                logger.LogInformation("Key was expired and removed.");
             }
         }
+        logger.LogTrace("Exiting middleware method.");
     }
 }

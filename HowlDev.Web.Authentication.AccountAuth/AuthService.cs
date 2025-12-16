@@ -234,18 +234,18 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         conn.WithConnectionAsync(async conn => {
             string sql = """
             select p.id, p.accountName, p.role from "HowlDev.User" p
-                where p.accountName ilike @query
+                where p.accountName ilike @SearchPattern
                 limit @limit
             """;
             try {
-                return await conn.QueryAsync<Account>(sql, new { query, limit });
+                return await conn.QueryAsync<Account>(sql, new { SearchPattern = $"%{query}%", limit });
             } catch {
                 return [];
             }
         });
 
     /// <inheritdoc />
-    public Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit) =>
+    public Task<IEnumerable<Account>> QueryUsersAboveRoleAsync(int role, int limit = 10) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
             select p.id, p.accountName, p.role from "HowlDev.User" p
@@ -260,7 +260,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         });
 
     /// <inheritdoc />
-    public Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit) =>
+    public Task<IEnumerable<Account>> QueryUsersAboveOrAtRoleAsync(int role, int limit = 10) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
             select p.id, p.accountName, p.role from "HowlDev.User" p
@@ -275,7 +275,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         });
 
     /// <inheritdoc />
-    public Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit) =>
+    public Task<IEnumerable<Account>> QueryUsersAtRoleAsync(int role, int limit = 10) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
             select p.id, p.accountName, p.role from "HowlDev.User" p
@@ -290,7 +290,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         });
 
     /// <inheritdoc />
-    public Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit) =>
+    public Task<IEnumerable<Account>> QueryUsersBelowOrAtRoleAsync(int role, int limit = 10) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
             select p.id, p.accountName, p.role from "HowlDev.User" p
@@ -305,7 +305,7 @@ public partial class AuthService(IConfiguration config, ILogger<AuthService> log
         });
 
     /// <inheritdoc />
-    public Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit) =>
+    public Task<IEnumerable<Account>> QueryUsersBelowRoleAsync(int role, int limit = 10) =>
         conn.WithConnectionAsync(async conn => {
             string sql = """
             select p.id, p.accountName, p.role from "HowlDev.User" p

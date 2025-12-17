@@ -92,6 +92,12 @@ For items in long-term storage:
 
 ## Changelog
 
+3.0.1 (12/16/25) and 1.0.2
+
+- Extracted dependency for middleware to an internal interface so multiple authentication types can be based off of it
+- Inverted dependency so that AccountAuth now depends on Middleware, not the other way around
+- Oh yeah, this is the major release. I figured out a pipeline, so now I can make new packages faster. 
+
 3.0.3 - Beta (12/15/25)
 
 - Removed the Logging option from the configuration (this should be left to you anyways). 

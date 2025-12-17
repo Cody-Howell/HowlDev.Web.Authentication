@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>Howl Dev</Authors>
 		<Description>A naive account/key middleware for an API.</Description>
 		<Copyright>Copyright (c) Howl Dev 2025</Copyright>
@@ -22,7 +22,10 @@
   <ItemGroup>
     	<None Include="../README.md" Pack="true" PackagePath="README.md" />
 		<None Include="../_HowlDevLogo.png" Pack="true" PackagePath="" />
-    	<ProjectReference Include="..\HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 </Project>

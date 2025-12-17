@@ -1,4 +1,4 @@
-﻿namespace HowlDev.Web.Authentication.AccountAuth;
+﻿namespace HowlDev.Web.Authentication.Middleware;
 
 /// <summary>
 /// Simple class to hold relevant information from the DB Schema as listed. 

@@ -1,5 +1,4 @@
-﻿using HowlDev.Web.Authentication.AccountAuth;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HowlDev.Web.Authentication.Middleware;
@@ -16,7 +15,7 @@ namespace HowlDev.Web.Authentication.Middleware;
 /// it will remove that key. If it's under but over the re-auth time (also assuming config), it will 
 /// reset the expiration date. Then it will let the response pass. 
 /// </summary>
-public class IdentityMiddleware(RequestDelegate next, AuthService service, IDMiddlewareConfig config, ILogger<IdentityMiddleware> logger) {
+public class IdentityMiddleware(RequestDelegate next, IAuthMiddlewareService service, IDMiddlewareConfig config, ILogger<IdentityMiddleware> logger) {
     /// <summary>
     /// 
     /// </summary>

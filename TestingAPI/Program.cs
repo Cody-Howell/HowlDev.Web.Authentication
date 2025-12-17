@@ -1,4 +1,5 @@
 using HowlDev.Web.Authentication.AccountAuth;
+using HowlDev.Web.Authentication.AccountAuth.Interfaces;
 using HowlDev.Web.Authentication.Middleware;
 using Npgsql;
 using System.Data;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 //var connString = "Host=localhost;Database=accountAuth;Username=cody;Password=123456abc;";
 //Console.WriteLine("Connection String: " + connString);
 //builder.Services.AddSingleton<DbConnector>();
-builder.Services.AddSingleton<AuthService>();
+builder.AddAuthService();
 builder.Services.AddLogging();
 
 var app = builder.Build();

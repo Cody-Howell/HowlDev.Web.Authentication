@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using HowlDev.Web.Authentication.AccountAuth.Interfaces;
+using HowlDev.Web.Authentication.Middleware;
 using HowlDev.Web.Helpers.DbConnector;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ namespace HowlDev.Web.Authentication.AccountAuth;
 /// }
 /// </code>
 /// </summary>
-public partial class AuthService(IConfiguration config, ILogger<AuthService> logger) : IAuthService {
+public partial class AuthService(IConfiguration config, ILogger<AuthService> logger) : IAuthService, IAuthMiddlewareService {
     private ConcurrentDictionary<string, Guid> guidLookup = new();
     private ConcurrentDictionary<string, int> roleLookup = new();
     private DbConnector conn = new DbConnector(config);

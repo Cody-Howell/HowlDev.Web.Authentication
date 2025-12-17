@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HowlDev.Web.Authentication.AccountAuth\HowlDev.Web.Authentication.AccountAuth.csproj" />
-    <ProjectReference Include="..\HowlDev.Web.Authentication.Middleware\HowlDev.Web.Authentication.Middleware.csproj" />
   </ItemGroup>
 
 </Project>

@@ -52,7 +52,7 @@ public interface IAuthService : IAuthMiddlewareService {
     /// of someone else gaining access to their account.
     /// </summary>
     Task GlobalSignOutAsync(string accountId);
-    
+
     /// <summary>
     /// Returns the Guid of a given account name. 
     /// </summary>

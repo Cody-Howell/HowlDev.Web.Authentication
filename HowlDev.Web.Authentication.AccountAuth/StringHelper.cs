@@ -1,7 +1,5 @@
-﻿using System.Globalization;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace HowlDev.Web.Authentication.AccountAuth;
 

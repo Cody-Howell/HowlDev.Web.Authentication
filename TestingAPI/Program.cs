@@ -1,8 +1,5 @@
 using HowlDev.Web.Authentication.AccountAuth;
-using HowlDev.Web.Authentication.AccountAuth.Interfaces;
 using HowlDev.Web.Authentication.Middleware;
-using Npgsql;
-using System.Data;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -2,7 +2,6 @@
 using HowlDev.Web.Authentication.AccountAuth.Interfaces;
 using HowlDev.Web.Authentication.Middleware;
 using HowlDev.Web.Helpers.DbConnector;
-using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;

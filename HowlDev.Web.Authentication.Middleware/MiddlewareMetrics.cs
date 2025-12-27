@@ -20,4 +20,10 @@ public static class AuthMetrics {
     /// </summary>
     public static readonly Counter<int> ExpiredKeys =
         _meter.CreateCounter<int>("auth_expired_keys");
+
+    /// <summary>
+    /// Count of how many keys could not be found.
+    /// </summary>
+    public static readonly Counter<int> UnknownApiKeys =
+        _meter.CreateCounter<int>("auth_unknown_keys");
 }

@@ -16,9 +16,7 @@ namespace HowlDev.Web.Authentication.Middleware;
 /// reset the expiration date. Then it will let the response pass. 
 /// </summary>
 public class IdentityMiddleware(RequestDelegate next, IAuthMiddlewareService service, IDMiddlewareConfig config, ILogger<IdentityMiddleware> logger) {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <summary/>
     public async Task InvokeAsync(HttpContext context) {
         logger.LogTrace("Entered middleware method.");
 
@@ -71,6 +69,7 @@ public class IdentityMiddleware(RequestDelegate next, IAuthMiddlewareService ser
             } catch {
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("API key does not exist.");
+                AuthMetrics.UnknownApiKeys.Add(1);
                 logger.LogInformation("Could not find API key ({key}) in the table.", key);
                 return;
             }

@@ -4,7 +4,8 @@ using Microsoft.Extensions.Logging;
 namespace HowlDev.Web.Authentication.Middleware;
 
 /// <summary>
-/// Identity Middleware relies on the <c>IIDMiddlewareConfig</c> to be injected through DI, as well as the AuthService. 
+/// Identity Middleware relies on the <c>IIDMiddlewareConfig</c> to be injected through DI, as well as an implementation 
+/// of <c>IAuthMiddlewareService</c>. 
 /// For any error, it will throw a <c>401</c> HTTP code with a string (of which 3 are user-friendly). Make sure 
 /// the headers always contain a little bit of information, as the 4th is developer-intended. 
 /// <br/> <br/>
@@ -19,31 +20,35 @@ public class IdentityMiddleware(RequestDelegate next, IAuthMiddlewareService ser
     /// <summary/>
     public async Task InvokeAsync(HttpContext context) {
         logger.LogTrace("Entered middleware method.");
+        string path = context.Request.Path.ToString();
 
         bool startsWith = false;
         if (config.Whitelist is not null) {
-            startsWith = !context.Request.Path.ToString().StartsWith(config.Whitelist);
+            startsWith = !path.StartsWith(config.Whitelist);
         }
 
 
         if (startsWith) {
             logger.LogDebug("Whitelist skipped authentication.");
             await next(context);
-        } else if (config.Paths.Contains(context.Request.Path)) {
+        } else if (config.Paths.Any(c => c.Contains(path))) {
             logger.LogDebug("Paths excluded current request.");
+            await next(context);
+        } else if (config.RegexPaths.Any(c => c.IsMatch(path))) {
+            logger.LogDebug("Regex excluded current request.");
             await next(context);
         } else {
             // Validate user here
-            string? account = context.Request.Headers["Account-Auth-Account"];
-            string? key = context.Request.Headers["Account-Auth-ApiKey"];
+            string? account = context.Request.Headers[config.HeaderAccount];
+            string? key = context.Request.Headers[config.HeaderKey];
             if (string.IsNullOrEmpty(account) || string.IsNullOrEmpty(key)) {
                 context.Response.StatusCode = 401;
                 if (config.DisableHeaderInfo) {
                     await context.Response.WriteAsync("Unauthorized: Missing header(s).");
                 } else {
-                    await context.Response.WriteAsync("Unauthorized: Missing header(s).\nRequires an \"Account-Auth-Account\" and \"Account-Auth-ApiKey\" header.");
+                    await context.Response.WriteAsync($"Unauthorized: Missing header(s).\nRequires an \"{config.HeaderAccount}\" and \"{config.HeaderKey}\" header.");
                 }
-                logger.LogInformation("Two required headers were not found. Found headers: {headers}", context.Request.Headers);
+                logger.LogInformation("Two required headers were not found.");
                 return;
             }
 

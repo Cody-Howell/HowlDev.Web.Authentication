@@ -1,4 +1,6 @@
-﻿namespace HowlDev.Web.Authentication.Middleware;
+﻿using System.Text.RegularExpressions;
+
+namespace HowlDev.Web.Authentication.Middleware;
 
 /// <summary>
 /// Configure certain parts of your middleware, such as un-authenticated paths, and (optionally)
@@ -9,7 +11,13 @@ public class IDMiddlewareConfig {
     /// Set to the list of paths that you want the middleware  
     /// to exclude authorization.
     /// </summary>
-    public List<string> Paths { get; set; } = new List<string>();
+    public List<string> Paths { get; set; } = [];
+
+    /// <summary>
+    /// After checking Whitelist and Paths, run through any RegexPaths that return a valid match to 
+    /// the regex provided. 
+    /// </summary>
+    public List<Regex> RegexPaths { get; set; } = [];
 
     /// <summary>
     /// If not null, the middleware will only check paths that start with this 
@@ -41,4 +49,16 @@ public class IDMiddlewareConfig {
     /// in production (and after you get your frontend API calls set up). 
     /// </summary>
     public bool DisableHeaderInfo { get; set; } = false;
+
+    /// <summary>
+    /// Specify the header name for the account name which the middleware checks for valid account names. <br/>
+    /// Defaults to "Account-Auth-Account".
+    /// </summary>
+    public string HeaderAccount { get; set; } = "Account-Auth-Account";
+
+    /// <summary>
+    /// Specify the header name for the api key which the middleware checks for valid keys. <br/>
+    /// Default to "Account-Auth-ApiKey".
+    /// </summary>
+    public string HeaderKey { get; set; } = "Account-Auth-ApiKey";
 }

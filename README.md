@@ -19,6 +19,7 @@ var app = builder.Build();
 
 app.UseAccountIdentityMiddleware(options => {
     // Apply Path, Whitelist, Timespan, or Logging objects here
+    // Configure how Headers behave and which headers you read from
 });
 ```
 
@@ -91,6 +92,12 @@ For items in long-term storage:
     1. Account Name Switching. Currently, there are no functions to allow you to change the account name. One could be written that checks if the account name is already in use, and if not, allows you to change a user given the GUID. This should also invalidate all cache related to that account name.
 
 ## Changelog
+
+1.1.0 (12/26/25)
+
+- Middleware configuration now enables Regex paths for more general endpoints (such as ones with arbitrary IDs)
+  - Configure in the options configuration as RegexPaths
+- You can now update the headers for account and api key instead of the defaults. Those defaults will apply, but you can now overwrite them to whatever you wish. 
 
 3.0.1 (12/16/25) and 1.0.2
 
